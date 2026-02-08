@@ -1,0 +1,747 @@
+:root {
+  --bg-color: #000;
+  --text-color: #fff;
+  --accent-color: #e60023;
+  /* TikTok/youtube shorts red-ish */
+  --overlay-bg: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow: hidden;
+  /* Prevent body scroll, use container */
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.app-container {
+  height: 100%;
+  width: 100%;
+  max-width: 480px;
+  /* Mobile width on desktop */
+  margin: 0 auto;
+  position: relative;
+  background: #000;
+}
+
+/* Settings Page */
+.settings-container {
+  color: #fff;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 80px;
+  background: #111;
+}
+
+/* Hide Scrollbar Utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Discover Page */
+.discover-container {
+  color: #fff;
+  height: 100%;
+  /* Constrain to parent height */
+  overflow-y: auto;
+  /* Enable scroll within this container */
+  padding-bottom: 80px;
+  background: #111;
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.discover-container::-webkit-scrollbar {
+  display: none;
+}
+
+.page-header {
+  padding: 15px;
+  text-align: center;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #222;
+  margin-bottom: 1px;
+}
+
+.loading-more {
+  text-align: center;
+  padding: 20px;
+  color: #888;
+  width: 100%;
+  clear: both;
+}
+
+.no-thumbnail {
+  width: 100%;
+  height: 100%;
+  background: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.settings-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Comments Drawer Input Area */
+.comment-input-area {
+  padding: 10px 16px;
+  background: #111;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #2a2a2a;
+  border-radius: 20px;
+  padding: 4px 4px 4px 16px;
+}
+
+.input-wrapper input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  padding: 8px 0;
+  outline: none;
+  font-size: 14px;
+}
+
+.input-wrapper button {
+  background: transparent;
+  border: none;
+  color: #fe2c55;
+  /* TikTok red */
+  padding: 8px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-wrapper button:disabled {
+  color: #555;
+  cursor: default;
+}
+
+.login-prompt {
+  text-align: center;
+  font-size: 14px;
+  color: #888;
+  padding: 12px;
+}
+
+/* Adjust comments list padding to not be hidden by input */
+.comments-list {
+  padding: 16px;
+  padding-bottom: 70px;
+  /* Space for input area */
+  overflow-y: auto;
+  flex: 1;
+  /* Take remaining space */
+}
+
+/* Shared Video Grid (Profile & Discover) */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* 3 columns like TikTok/Insta */
+  gap: 2px;
+  padding: 2px;
+}
+
+.grid-item {
+  position: relative;
+  aspect-ratio: 9/16;
+  /* Portrait ratio */
+  background: #222;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.grid-stats {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.settings-section {
+  margin-bottom: 30px;
+  background: #222;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.settings-section h3 {
+  margin-bottom: 15px;
+  color: #888;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.logged-user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.status {
+  color: #4caf50;
+  font-size: 0.85rem;
+}
+
+.logout-btn-full {
+  width: 100%;
+  padding: 12px;
+  background: #333;
+  color: #ff4444;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.error-msg {
+  color: #ff4444;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.app-version {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.shorts-feed {
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+.shorts-feed::-webkit-scrollbar {
+  display: none;
+}
+
+.short-item {
+  height: 100%;
+  width: 100%;
+  scroll-snap-align: start;
+  position: relative;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.mute-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Overlay Layout */
+.overlay-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  /* Let clicks pass through generally */
+}
+
+/* Bottom Information (Author, Title) */
+.overlay-info {
+  position: absolute;
+  bottom: 60px;
+  /* Above nav bar */
+  left: 0;
+  width: 75%;
+  /* Leave room for side actions */
+  padding: 15px;
+  padding-left: 12px;
+  background: transparent;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: auto;
+}
+
+.username-link {
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.video-title {
+  font-size: 0.9rem;
+  line-height: 1.25;
+  color: #eee;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+/* Side Action Buttons */
+.side-actions {
+  position: absolute;
+  bottom: 80px;
+  /* Start above nav bar */
+  right: 8px;
+  /* Slightly tighter to edge */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+}
+
+.avatar-action {
+  margin-bottom: 12px;
+  /* Extra space below avatar */
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-avatar {
+  width: 42px;
+  /* Smaller, closer to button size */
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid white;
+  /* Thinner border */
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+  background: #333;
+}
+
+.action-item:active .side-avatar {
+  transform: scale(0.9);
+}
+
+.action-icon-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.1s;
+  /* Optional: Add background to match some apps if requested,
+     but user asked for avatar to match buttons which currently have no bg, just icons.
+     I'll keep icons clean with drop shadow. */
+}
+
+.action-item:active .action-icon-bg {
+  transform: scale(0.9);
+}
+
+.drop-shadow-icon {
+  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.6));
+}
+
+.action-text {
+  font-size: 11px;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #666;
+}
+
+.profile-container {
+  color: #fff;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 80px;
+  background: #111;
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.profile-container::-webkit-scrollbar {
+  display: none;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #333;
+  background: #000;
+}
+
+.profile-cover {
+  width: 100%;
+  height: 120px;
+  background-size: cover;
+  background-position: center;
+  background-color: #333;
+}
+
+.profile-info {
+  padding: 0 20px 20px;
+  margin-top: -30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  object-fit: cover;
+  background: #222;
+}
+
+.profile-text h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.profile-text p {
+  font-size: 0.9rem;
+  color: #ccc;
+  line-height: 1.4;
+}
+
+.logout-btn {
+  margin-top: 10px;
+  background: #333;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+}
+
+.login-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+.login-view h2 {
+  margin-bottom: 10px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin-top: 20px;
+}
+
+.login-input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #222;
+  color: white;
+}
+
+.login-btn {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add-video-section {
+  /* Future upload button area */
+}
+
+/* Comments Drawer Styles */
+.comments-drawer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  animation: fadeIn 0.3s ease;
+}
+
+.comments-drawer {
+  width: 100%;
+  height: 70%;
+  background: #1e1e1e;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease-out;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #333;
+}
+
+.drawer-header h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.commen.author-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-decoration: none;
+  color: white;
+}
+
+.author-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.comment-avatar img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #333;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-author {
+  font-size: 0.85rem;
+  font-weight: bold;
+  opacity: 0.8;
+  margin-bottom: 2px;
+  display: block;
+}
+
+.comment-body {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  opacity: 0.9;
+  word-break: break-word;
+}
+
+.drawer-loading,
+.no-comments {
+  text-align: center;
+  padding: 20px;
+  opacity: 0.6;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #000;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-item {
+  color: #888;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 10px;
+  gap: 4px;
+}
+
+.nav-item.active {
+  color: #fff;
+}
+
+.upload-btn {
+  color: #fff;
+  opacity: 0.9;
+}
