@@ -23,7 +23,7 @@ function App() {
           <DiscoverProvider>
             <Router>
               <div className="app-container">
-                <div className="content-area" style={{ height: 'calc(100% - 60px)', position: 'relative' }}>
+                <div className="content-area">
                   <Routes>
                     <Route path="/" element={<ShortsFeed />} />
                     <Route path="/search" element={<DiscoverPage />} />
