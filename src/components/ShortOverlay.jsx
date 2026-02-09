@@ -25,7 +25,7 @@ const ShortOverlay = ({ title, author, authorAvatar, views, likes = 0, comments 
                     {/* Optional: Add a '+' icon here if we implement following later */}
                 </Link>
 
-                <div className="action-item" onClick={onVote}>
+                <div className={`action-item ${hasVoted ? 'liked' : ''}`} onClick={onVote}>
                     <div className="action-icon-bg">
                         <Heart
                             size={32}

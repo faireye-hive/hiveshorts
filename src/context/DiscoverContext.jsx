@@ -15,6 +15,15 @@ export const DiscoverProvider = ({ children }) => {
         setLoading(true);
         try {
             const data = await fetchShorts(page, 24);
+
+            console.log('[API RESPONSE]', {
+                pageRequested: page,
+                received: data?.shorts?.length,
+                totalPages: data?.totalPages,
+                permlinks: data?.shorts?.map(v => v.permlink),
+                author: data?.shorts?.map(v => v)
+            });
+
             if (data && data.shorts && data.shorts.length > 0) {
                 setVideos(prevVideos => {
                     const newVideos = data.shorts.filter(

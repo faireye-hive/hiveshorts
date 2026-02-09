@@ -131,35 +131,83 @@ const ProfilePage = () => {
         ? metadata.profile.cover_image
         : null;
 
+    // Calculate stats
+    const followerCount = hiveAccount?.follower_count || 0;
+    const followingCount = hiveAccount?.following_count || 0;
+    const postCount = hiveAccount?.post_count || videos.length;
+
     return (
         <div className="profile-container">
             <div className="profile-header">
                 {coverImage && (
-                    <div className="profile-cover" style={{ backgroundImage: `url(${coverImage})` }}></div>
+                    <div className="profile-cover" style={{ backgroundImage: `url(${coverImage})` }}>
+                        <div className="profile-cover-overlay"></div>
+                    </div>
                 )}
                 <div className="profile-info">
-                    <img src={profileImage} alt={targetUsername} className="profile-avatar" />
-                    <div className="profile-text">
-                        <h3>@{targetUsername}</h3>
-                        <p>{metadata.profile?.about}</p>
+                    <div className="profile-main">
+                        <img src={profileImage} alt={targetUsername} className="profile-avatar" />
+                        <div className="profile-details">
+                            <h3 className="profile-username">@{targetUsername}</h3>
+                            {metadata.profile?.about && (
+                                <p className="profile-bio">{metadata.profile.about}</p>
+                            )}
+                        </div>
+                    </div>
 
-                        {/* Show Logout if viewing own profile */}
-                        {user && user.username === targetUsername && (
-                            <button onClick={logout} className="logout-btn">
-                                <LogOut size={16} /> Logout
+                    {/* Stats Section */}
+                    <div className="profile-stats">
+                        <div className="stat-item">
+                            <span className="stat-value">{postCount}</span>
+                            <span className="stat-label">Posts</span>
+                        </div>
+                        <div className="stat-divider"></div>
+                        <div className="stat-item">
+                            <span className="stat-value">{followerCount}</span>
+                            <span className="stat-label">Followers</span>
+                        </div>
+                        <div className="stat-divider"></div>
+                        <div className="stat-item">
+                            <span className="stat-value">{followingCount}</span>
+                            <span className="stat-label">Following</span>
+                        </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="profile-actions">
+                        {user && user.username === targetUsername ? (
+                            <>
+                                <button className="edit-profile-btn">
+                                    <User size={16} />
+                                    Edit Profile
+                                </button>
+                                <button onClick={logout} className="logout-btn-profile">
+                                    <LogOut size={16} />
+                                </button>
+                            </>
+                        ) : (
+                            <button className="follow-btn">
+                                Follow
                             </button>
                         )}
                     </div>
                 </div>
             </div>
 
-            <div className="add-video-section">
-                {/* Placeholder for future add video button */}
+            {/* Videos Section Header */}
+            <div className="videos-section-header">
+                <div className="section-title-line"></div>
+                <h4 className="section-title">Videos</h4>
+                <div className="section-title-line"></div>
             </div>
 
             <div className="video-grid">
                 {videos.length === 0 && !loading ? (
-                    <p className="no-videos">No shorts found.</p>
+                    <div className="no-videos-container">
+                        <div className="no-videos-icon">📹</div>
+                        <p className="no-videos-text">No shorts yet</p>
+                        <p className="no-videos-subtext">Videos will appear here</p>
+                    </div>
                 ) : (
                     videos.map((video, index) => {
                         const isLastVideo = videos.length === index + 1;
@@ -188,7 +236,7 @@ const ProfilePage = () => {
                                     )
                                 }
                                 <div className="grid-stats">
-                                    <span>{video.views} views</span>
+                                    <span>👁 {video.views}</span>
                                 </div>
                             </div>
                         );

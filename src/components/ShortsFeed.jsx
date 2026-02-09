@@ -88,7 +88,12 @@ const ShortsFeed = () => {
                 </div>
             ))}
             {loading && <div className="loading-container">Loading more...</div>}
-            {!hasMore && <div className="loading-container">No more shorts</div>}
+            {!hasMore && shorts.length > 0 && (
+                <div className="loading-container" style={{ padding: '40px 20px' }}>
+                    <div style={{ fontSize: '2rem', marginBottom: '8px' }}>🎬</div>
+                    <div>You're all caught up!</div>
+                </div>
+            )}
         </div>
     );
 };

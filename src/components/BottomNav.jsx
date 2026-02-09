@@ -31,9 +31,11 @@ const BottomNav = () => {
                 <span>Discover</span>
             </NavLink>
 
-            <div className="nav-item upload-btn">
-                <PlusSquare size={32} />
-            </div>
+            <NavLink to="/upload" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
+                <div className="upload-btn">
+                    <PlusSquare size={32} />
+                </div>
+            </NavLink>
 
             <NavLink to="/inbox" className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}>
                 <MessageSquare size={24} />
